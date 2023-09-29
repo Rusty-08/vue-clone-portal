@@ -1,11 +1,13 @@
 <script setup>
     import { ref } from 'vue'
+    
+    import { faHouse, faMessage, faUserPlus, faUserPen, faClipboardList, faGraduationCap } from '@fortawesome/free-solid-svg-icons'
 
     const sidebar = [
-        { header: '', links: ['Home', 'Chat'], icon: ['fa-solid fa-house', 'fa-solid fa-message'] }, 
-        { header: 'ENROLLMENT', links: ['Pre-Registration'], icon: ['fa-solid fa-user-plus'] },
-        { header: 'PROFILE', links: ['Individuan Form'], icon: ['fa-solid fa-user-pen'] }, 
-        { header: 'REPORTS', links: ['My Grades', 'My Permanent Record', 'Enrollment Status'], icon: ['fa-solid fa-clipboard-list', 'fa-solid fa-graduation-cap', 'fa-solid fa-clipboard-list'] }
+        { header: '', links: ['Home', 'Chat'], icon: [faHouse, faMessage] }, 
+        { header: 'ENROLLMENT', links: ['Pre-Registration'], icon: [faUserPlus] },
+        { header: 'PROFILE', links: ['Individuan Form'], icon: [faUserPen] }, 
+        { header: 'REPORTS', links: ['My Grades', 'My Permanent Record', 'Enrollment Status'], icon: [faClipboardList, faGraduationCap, faClipboardList] }
     ]
    
     const getLinkURL = (link) => {
@@ -28,7 +30,6 @@
             <ul v-for="(section, index) in sidebar" class="navbar-nav px-3" :key="index">
                 <span class="nav-link-header px-2">{{ section.header }}</span>
                 <li v-for="(link, linkIndex) in section.links" :key="linkIndex" class="nav-item">
-                    <font-awesome-icon v-for="(i, iconIndex) in section.icon" :icon="i" :key="iconIndex" />
                     <a :href="getLinkURL(link)"
                         class="nav-link"
                         :class="{ 'active': link == 'Home' }"
@@ -39,6 +40,7 @@
                         :aria-controls="link"
                         :aria-selected="linkIndex === 0"
                     >
+                        <font-awesome-icon :icon="section.icon[linkIndex]" />
                         {{ link }}
                     </a>
                 </li>
