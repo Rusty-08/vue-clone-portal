@@ -31,7 +31,7 @@
 </script>
 
 <template>
-    <aside class="side-bar fixed-left position-relative vh-100">
+    <aside class="side-bar fixed-left vh-100 position-relative">
         <!-- SIDEBAR HEADER -->
         <h6 class="header d-flex align-items-center px-4 text-light fs-8 fw-bold">ACADEMIC PORTAL</h6>
 
@@ -60,7 +60,7 @@
                 </li>
             </ul>
         </div>
-        <div class="report-link position-absolute w-100 bottom-0">
+        <div class="report-link position-absolute bottom-0 w-100">
             <button
                 type="button"
                 class="btn w-100 py-2"
@@ -71,8 +71,8 @@
                 Report a Bug
             </button>
         </div>
-
     </aside>
+
 </template>
 
 <style setup>

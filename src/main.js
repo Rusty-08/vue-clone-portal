@@ -1,17 +1,17 @@
 import { createApp } from 'vue'
+
 import style from './style.css'
 
 // BOOTSTRAP
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import 'bootstrap/js/index.umd.js';
+
+import App from './App.vue'
 
 // FONTAWESOME
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
-
-import App from './App.vue'
 
 library.add(faUserSecret)
 

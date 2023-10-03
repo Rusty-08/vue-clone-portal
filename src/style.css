@@ -9,14 +9,20 @@
 :root {
     --primary-color: #ffffff;
     --secondary-color: #dbdfe9;
+    --dark-font-color: #100000;
+    --light-font-color: #f7f2f2;;
+    --body-dark-bg: #121111;
+    --body-light-bg: #fcfcfc;
     --inactive-link: #dbdfe9;
     --inactive-icon: #7f8194;
     --menu-heading: #626671;
     --sidebar-width: 265px;
     --border-dashed: 1px dashed #393945;
     --header-height: 74px;
-    --header-bg-color: #131313;
-    --body-bg-color: #1c1c1c;
+    --header-dark-bg: #131313;
+    --dropdown-dark-bg: #1c1c1c;
+    --bs-primary: #3E97FF;
+    --bs-header-text: #9393a4;
 }
 
 ul, li, a {
@@ -25,7 +31,7 @@ ul, li, a {
 }
 
 body {
-    background-color: var(--body-bg-color) !important;
+    background-color: var(--body-dark-bg) !important;
 }
 
 .fs-7 {
