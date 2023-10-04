@@ -23,15 +23,29 @@
             icon: [faClipboardList, faGraduationCap, faClipboardList] 
         }
     ]
+
+    const linkLists = [
+        'Home',
+        'Chat',
+        'Pre-Registration',
+        'Individuan Form',
+        'My Grades',
+        'My Permanent Record',
+        'Enrollment Status'
+    ]
    
     const getLinkURL = (link) => {
-        return '#' + link.toLowerCase().replace(' ', '-');
+        return '#' + link.toLowerCase().split(' ').join('-')
+    }
+
+    const getLink = (link) => {
+        return link.toLowerCase().split(' ').join('-')
     }
 
 </script>
 
 <template>
-    <aside class="side-bar fixed-left vh-100 position-relative">
+    <aside class="side-bar vh-100 position-relative">
         <!-- SIDEBAR HEADER -->
         <h6 class="header d-flex align-items-center px-4 text-light fs-8 fw-bold">ACADEMIC PORTAL</h6>
 
@@ -47,12 +61,12 @@
                     <a :href="getLinkURL(link)"
                         class="nav-link"
                         :class="{ 'active': link == 'Home' }"
-                        :id="`${link}-link`"
+                        :id="`${getLink(link)}-link`"
                         data-bs-toggle="pill"
-                        :data-bs-target="`#${link}`"
-                        role="tab" 
-                        :aria-controls="link"
-                        :aria-selected="link == 'Home'"
+                        :data-bs-target="getLinkURL(link)"
+                        role="tab"
+                        :aria-controls="getLink(link)"
+                        :aria-selected="true == link == 'Home'"
                     >
                         <font-awesome-icon :icon="section.icon[linkIndex]" />
                         {{ link }}
@@ -60,6 +74,7 @@
                 </li>
             </ul>
         </div>
+
         <div class="report-link position-absolute bottom-0 w-100">
             <button
                 type="button"
@@ -73,18 +88,37 @@
         </div>
     </aside>
 
+    <!-- PAGE CONTENT -->
+    <main class="tab-content" id="main-body">
+        <section
+                v-for="(link, linkIndex) in linkLists"
+                class="tab-pane fade p-2 d-flex justify-content-center align-items-center text-light fw-bold fs-3"
+                :class="{ 'active show': linkIndex == 0 }"
+                :id="getLink(link)"
+                role="tabpanel"
+                :aria-labelledby="`${getLink(link)}-link`"
+                tabindex="0"
+            >
+            {{ `${link} Page` }}
+        </section>
+    </main>
+
 </template>
 
 <style setup>
-    ::-webkit-scrollbar {
+    .nav::-webkit-scrollbar {
         width: 4px;
     }
-    ::-webkit-scrollbar-thumb {
+    .nav::-webkit-scrollbar-thumb {
         background-color: transparent;
         border-radius: 6px;
     }
     .nav:hover::-webkit-scrollbar-thumb {
         background-color: #282831;
+    }
+    .side-bar {
+        position: fixed !important;
+        z-index: 500;
     }
     .nav {
         overflow-y: scroll;
@@ -112,7 +146,7 @@
         width: var(--sidebar-width);
     }
     .navbar-nav {
-        padding: 0 0.8rem;
+        padding: 0 0.6rem 0 0.7rem;
     }
     .nav-link-header {
         color: var(--menu-heading);
@@ -143,10 +177,18 @@
     }
     .nav-link.active {
         color: var(--primary-color) !important;
-        background-color: #1c1c21 !important;
+        background-color: hsl(240, 8%, 12%) !important;
     }
     .nav-link.active svg,
     .nav-link:hover svg {
         color: var(--primary-color) !important;
+    }
+    .tab-content section {
+        width: calc(100% - var(--sidebar-width));
+        min-height: calc(100vh - var(--header-height)) !important;
+        background-color: var(--body-dark-bg);
+        position: absolute;
+        left: var(--sidebar-width);
+        top: var(--header-height);
     }
 </style>

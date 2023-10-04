@@ -211,7 +211,7 @@
     .notification-header p {
         font-weight: 500;
         font-size: 1.1rem !important;
-        margin: 2rem 1.8rem 0 1.8rem;
+        margin: 1.9rem 1.8rem 0 1.8rem;
     }
     .notification-header .nav {
         border-bottom: 2px solid var(--border-color);
@@ -226,13 +226,15 @@
         font-size: 0.85rem !important;
         border-bottom: 2px solid transparent;
         transition: var(--transition-175s);
+        color: var(--secondary-color);
     }
     .notification-header .nav-link.active,
     .notification-header .nav-link:hover {
+        color: var(--primary-color);
         border-color: var(--bs-primary);
         background-color: transparent !important;
     }
-    .nav-item {
+    .notification-header .nav-item {
         padding: 0 !important;
         margin-bottom: -2px;
     }

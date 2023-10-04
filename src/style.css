@@ -39,6 +39,16 @@ body {
     background-color: var(--body-dark-bg) !important;
 }
 
+body::-webkit-scrollbar {
+    width: 0.6rem;
+    background-color: var(--body-dark-bg);
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: var(--gray-700);
+    border-radius: 0.3rem;
+}
+
 .fs-7 {
     font-size: 0.9rem !important;
 }
