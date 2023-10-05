@@ -40,7 +40,7 @@
 
     const getLink = (link) => {
         return link.toLowerCase().split(' ').join('-')
-    }
+    };
 
 </script>
 
@@ -141,7 +141,7 @@
         background-color: #3f425459 !important;
     }
     .side-bar {
-        background-color: var(--header-bg-color);
+        background-color: #131313;
         border-right: var(--border-dashed);
         width: var(--sidebar-width);
     }
@@ -183,6 +183,7 @@
     .nav-link:hover svg {
         color: var(--primary-color) !important;
     }
+
     .tab-content section {
         width: calc(100% - var(--sidebar-width));
         min-height: calc(100vh - var(--header-height)) !important;

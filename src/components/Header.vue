@@ -1,6 +1,14 @@
 <script setup>
-    import { faLaptopCode, faBell, faMoon, faUser } from '@fortawesome/free-solid-svg-icons'
+    import { faLaptopCode, faBell, faMoon, faUser, faSun, faComputer, faDisplay, faDesktop } from '@fortawesome/free-solid-svg-icons'
     import { ref } from 'vue'
+
+    const currentTheme = ref('Dark')
+
+    const themes = [
+        { name: 'Light', icon: faSun },
+        { name: 'Dark', icon: faMoon },
+        { name: 'System', icon: faDisplay }
+    ];
 
 </script>
 
@@ -16,6 +24,8 @@
             </div>
         </div>
         <div class="wrapper-dropdowns d-flex justify-content-center align-items-center gap-2">
+            
+            <!-- NOTIFICATION DROPDOWN BUTTON -->
             <div class="dropdown">
                 <a class="notification btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
                     <font-awesome-icon :icon="faBell" class="fs-5" />
@@ -80,18 +90,33 @@
                     </div>
                 </div>
             </div>
+
+            <!-- THEM DROPDOWN BUTTON -->
             <div class="dropdown">
-                <a class="theme btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
-                    <font-awesome-icon :icon="faMoon" class="fs-5" />
+                <a class="theme btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <font-awesome-icon :icon=" currentTheme == 'Dark' ? faMoon : faSun" class="fs-5" />
                 </a>
                 <div class="theme-content dropdown-menu dropdown-menu-end p-0">
-                    <div class="card dropdown-item bg-transparent">
-                        <p class="text-light mt-4 mb-3 px-3">Theme</p>
+                    <div class="card bg-transparent py-3">
+                        <a 
+                            v-for="(theme, index) of themes"
+                            class="dropdown-item w-100 px-3 py-2 d-flex gap-2 align-items-center"
+                            type="button"
+                            :class="{ 'active': theme.name == currentTheme }"
+                            data-bs-toggle="pill"
+                            :key="index"
+                            @click="currentTheme = theme.name"
+                        >
+                            <font-awesome-icon :icon="theme.icon" class="fs-6" />
+                            <span class="fs-7">{{ theme.name }}</span>
+                        </a>
                     </div>
                 </div>
             </div>
+
+            <!-- PROFILE DROPDOWN BUTTON -->
             <div class="dropdown">
-                <a class="user p-1 px-2 btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                <a class="user btn dropdown-toggle p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
                     <img src="/user-profile.jpg" class="rounded-3" alt="" srcset="">
                 </a>
                 <div class="user-content dropdown-menu dropdown-menu-end">
@@ -109,10 +134,10 @@
         height: var(--header-height) !important;
         background-color: var(--header-dark-bg);
         left: var(--sidebar-width);
-        padding: 0 2rem;
+        padding: 0 1.2rem 0 2.2rem;
     }
     .system-link p {
-        color: var(--bs-header-text) !important;
+        color: var(--secondary-font-light-color) !important;
         font-weight: 600;
     }
     .system-link {
@@ -138,10 +163,15 @@
     .card-version svg,
     .card-version span,
     .dropdown a {
-        color: #78829D !important;
+        color: var(--light-icon-font-color) !important;
     }
-    .dropdown a {
+    .dropdown .notification,
+    .dropdown .theme,
+    .dropdown .user {
         line-height: 0;
+        width: 2.8rem;
+        height: 2.2rem;
+        text-align: center;
     }
     .dropdown .notification-content {
         width: 375px !important;
@@ -155,7 +185,7 @@
     .dropdown .theme:hover,
     .dropdown .notification.show,
     .dropdown .theme.show {
-        background-color: #2b2b40 !important;
+        background-color: rgba(62, 151, 255, 0.1) !important;
         border-color: transparent !important;
     }
     .system-version:hover p,
@@ -198,6 +228,9 @@
             margin-top: 0;
         }
     }
+
+    /* NOTIFICATION DROPDOWN */
+
     .notification-content .card,
     .theme-content .card,
     .user-content .card {
@@ -242,23 +275,51 @@
         height: 200px !important;
     }
     .notification-body p {
-        color: var(--primary-color);
+        color: var(--light-font-color);
         font-weight: 600;
         font-size: 1.1rem;
     }
     .notification-body span {
-        color: var(--gray-700);
+        color: var(--secondary-font-light-color);
         font-weight: 500;
     }
     .notification-footer {
         border-top: 1px solid var(--border-color);
     }
     .notification-footer a {
-        padding: 1rem 1.2rem;
-        color: var(--gray-700) !important;
+        padding: 1rem 1.2rem !important;
+        color: var(--secondary-font-light-color) !important;
         transition: var(--transition-175s);
     }
     .notification-footer a:hover {
         color: var(--bs-primary) !important;
+    }
+
+    /* THEME DROPDOWN */
+
+    .theme-content {
+        width: 175px;
+    }
+    .theme-content a {
+        cursor: pointer;
+        border-radius: 0.5rem !important;
+    }
+    .theme-content a:hover {
+        color: var(--bs-primary) !important;
+        background-color: transparent;
+    }
+    .theme-content a.active,
+    .theme-content a.active:hover {
+        background-color: rgba(62, 151, 255, 0.1) !important;
+        color: var(--bs-primary) !important;
+    }
+    .theme-content a > svg {
+        width: 1.5rem;
+    }
+    .theme-content .card {
+        padding: 0.6rem 0.8rem !important;
+    }
+    .theme-content span {
+        font-weight: 500;
     }
 </style>

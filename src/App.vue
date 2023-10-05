@@ -4,6 +4,6 @@
 </script>
 
 <template>
-    <Sidebar />
     <Header />
+    <Sidebar />
 </template>
