@@ -19,4 +19,6 @@ const app = createApp(App);
 
 app.component('font-awesome-icon', FontAwesomeIcon);
 
+// document.querySelectorAll('.dropdown .theme')
+
 app.mount('#app');

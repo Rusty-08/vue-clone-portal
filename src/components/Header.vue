@@ -4,11 +4,20 @@
 
     const currentTheme = ref('Dark')
 
-    const themes = [
+    const isRead = ref(false)
+    const isViewed = ref(false)
+
+    const themes = ref([
         { name: 'Light', icon: faSun },
         { name: 'Dark', icon: faMoon },
         { name: 'System', icon: faDisplay }
-    ];
+    ])
+
+    const notificationTabs = ref([
+        'Alert',
+        'Event',
+        'Log'
+    ]);
 
 </script>
 
@@ -36,54 +45,61 @@
                             <p class="text-light mb-3">Notifications</p>
                             <!-- BUTTON TABLIST -->
                             <ul class="nav nav-pills d-flex gap-4" id="pills-tab" role="tablist">
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link h-100 active" id="alert" data-bs-toggle="pill" data-bs-target="#alert-link" type="button" role="tab" aria-controls="alert-link" aria-selected="true">Alerts</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link h-100" id="event" data-bs-toggle="pill" data-bs-target="#event-link" type="button" role="tab" aria-controls="event-link" aria-selected="false">Events</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link h-100" id="log" data-bs-toggle="pill" data-bs-target="#log-link" type="button" role="tab" aria-controls="log-link" aria-selected="false">Logs</button>
+                                <li
+                                    v-for="(tab, index) of notificationTabs"
+                                    class="nav-item"
+                                    role="presentation"
+                                    :key="index"
+                                >
+                                    <button
+                                        class="nav-link h-100"
+                                        :class="{ 'active': index == 0 }"
+                                        :id="tab.toLowerCase()"
+                                        data-bs-toggle="pill"
+                                        :data-bs-target="`#${tab.toLowerCase()}-link`"
+                                        type="button"
+                                        role="tab"
+                                        :aria-controls="`${tab.toLowerCase()}-link`"
+                                        :aria-selected="index == 0 ? true : false"
+                                    >
+                                        {{ tab + 's' }}
+                                    </button>
                                 </li>
                             </ul>
                         </div>
-                        <!-- NOTIFICATION -->
-                        <!-- TABLIST CONTENT -->
+                        <!-- NOTIFICATION TABLIST CONTENT -->
                         <div class="tab-content" id="notification-links">
                             <!-- ALERTS TAB -->
-                            <div class="tab-pane fade show active" id="alert-link" role="tabpanel" aria-labelledby="alert" tabindex="0">
+                            <div 
+                                v-for="(tab, index) of notificationTabs"
+                                class="tab-pane fade"
+                                :class="{ 'show active': index == 0 }"
+                                :id="`${tab.toLowerCase()}-link`" 
+                                role="tabpanel" 
+                                :aria-labelledby="tab.toLowerCase()"
+                                tabindex="0"
+                                :key="index"
+                            >
                                 <div class="notification-body w-100 d-flex align-items-center justify-content-center flex-column my-3">
                                     <p class="mb-1">All caught up!</p>
                                     <span class="fs-8">No new notifications.</span>
                                 </div>
                                 <!-- FOOTER -->
                                 <div class="notification-footer w-100 py-3 d-flex justify-content-center">
-                                    <a href="" class="btn fs-7">View all</a>
-                                    <a href="" class="btn fs-7">Mark all alerts as read</a>
-                                </div>
-                            </div>
-                            <!-- EVENTS TAB -->
-                            <div class="tab-pane fade" id="event-link" role="tabpanel" aria-labelledby="event" tabindex="0">
-                                <div class="notification-body w-100 d-flex align-items-center justify-content-center flex-column my-3">
-                                    <p class="mb-1">All caught up!</p>
-                                    <span class="fs-8">No new notifications.</span>
-                                </div>
-                                <!-- FOOTER -->
-                                <div class="notification-footer py-3 d-flex justify-content-center">
-                                    <a href="" class="btn fs-7">View all</a>
-                                    <a href="" class="btn fs-7">Mark all events as read</a>
-                                </div>
-                            </div>
-                            <!-- LOGS TAB -->
-                            <div class="tab-pane fade" id="log-link" role="tabpanel" aria-labelledby="log" tabindex="0">
-                                <div class="notification-body w-100 d-flex align-items-center justify-content-center flex-column my-3">
-                                    <p class="mb-1">All caught up!</p>
-                                    <span class="fs-8">No new notifications.</span>
-                                </div>
-                                <!-- FOOTER -->
-                                <div class="notification-footer py-3 d-flex justify-content-center">
-                                    <a href="" class="btn fs-7">View all</a>
-                                    <a href="" class="btn fs-7">Mark all logs as read</a>
+                                    <a 
+                                        class="btn fs-7"
+                                        :class="{ 'active': isViewed }"
+                                        @click="isViewed = !isViewed"
+                                    >
+                                        View all
+                                    </a>
+                                    <a  
+                                        class="btn fs-7"
+                                        :class="{ 'active': isRead }"
+                                        @click="isRead = !isRead"
+                                    >
+                                        {{ `Mark all ${tab}s as read` }}
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -105,7 +121,11 @@
                             :class="{ 'active': theme.name == currentTheme }"
                             data-bs-toggle="pill"
                             :key="index"
-                            @click="currentTheme = theme.name"
+                            @click="
+                                theme.name !== 'System'
+                                ? currentTheme = theme.name
+                                : currentTheme = 'Light'
+                            "
                         >
                             <font-awesome-icon :icon="theme.icon" class="fs-6" />
                             <span class="fs-7">{{ theme.name }}</span>
@@ -288,17 +308,22 @@
     }
     .notification-footer a {
         padding: 1rem 1.2rem !important;
+        font-weight: 500;
         color: var(--secondary-font-light-color) !important;
         transition: var(--transition-175s);
     }
-    .notification-footer a:hover {
+    .notification-footer a.active,
+    .notification-footer a:hover,
+    .notification-footer a:active {
         color: var(--bs-primary) !important;
+        border-color: transparent !important;
     }
 
     /* THEME DROPDOWN */
 
     .theme-content {
-        width: 175px;
+        width: 175px !important;
+        border: 0;
     }
     .theme-content a {
         cursor: pointer;
@@ -310,14 +335,14 @@
     }
     .theme-content a.active,
     .theme-content a.active:hover {
-        background-color: rgba(62, 151, 255, 0.1) !important;
+        background-color: var(--active-theme-background) !important;
         color: var(--bs-primary) !important;
     }
     .theme-content a > svg {
         width: 1.5rem;
     }
     .theme-content .card {
-        padding: 0.6rem 0.8rem !important;
+        padding: 0.8rem 0.7rem !important;
     }
     .theme-content span {
         font-weight: 500;

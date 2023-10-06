@@ -51,13 +51,13 @@
 
         <!-- SIDEBAR LINKS -->
         <div class="nav flex-column nav-pills my-3"
-            id="v-pills-tab"
+            id="pills-tab"
             role="tablist"
             aria-orientation="vertical"
         >
             <ul v-for="(section, index) in sidebar" class="navbar-nav w-100" :key="index">
                 <span class="nav-link-header">{{ section.header }}</span>
-                <li v-for="(link, linkIndex) in section.links" :key="linkIndex" class="nav-item">
+                <li v-for="(link, linkIndex) in section.links" :key="linkIndex" class="nav-item" role="presentation">
                     <a :href="getLinkURL(link)"
                         class="nav-link"
                         :class="{ 'active': link == 'Home' }"
@@ -65,8 +65,9 @@
                         data-bs-toggle="pill"
                         :data-bs-target="getLinkURL(link)"
                         role="tab"
+                        type="button"
                         :aria-controls="getLink(link)"
-                        :aria-selected="true == link == 'Home'"
+                        :aria-selected="link == 'Home' ? true : false"
                     >
                         <font-awesome-icon :icon="section.icon[linkIndex]" />
                         {{ link }}
@@ -92,8 +93,8 @@
     <main class="tab-content" id="main-body">
         <section
                 v-for="(link, linkIndex) in linkLists"
-                class="tab-pane fade p-2 d-flex justify-content-center align-items-center text-light fw-bold fs-3"
-                :class="{ 'active show': linkIndex == 0 }"
+                class="tab-pane fade text-light fw-bold fs-3 container-fluid"
+                :class="{ 'show active': linkIndex == 0 }"
                 :id="getLink(link)"
                 role="tabpanel"
                 :aria-labelledby="`${getLink(link)}-link`"
@@ -101,6 +102,7 @@
             >
             {{ `${link} Page` }}
         </section>
+        
     </main>
 
 </template>
@@ -183,11 +185,10 @@
     .nav-link:hover svg {
         color: var(--primary-color) !important;
     }
-
     .tab-content section {
         width: calc(100% - var(--sidebar-width));
         min-height: calc(100vh - var(--header-height)) !important;
-        background-color: var(--body-dark-bg);
+        /* background-color: var(--body-dark-bg); */
         position: absolute;
         left: var(--sidebar-width);
         top: var(--header-height);
